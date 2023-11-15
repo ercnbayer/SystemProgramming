@@ -19,19 +19,19 @@ typedef struct PersonList{
 
 void AddToTheTail(PersonList**root,char*szName){
 	
-	PersonList *add=malloc(sizeof(PersonList));
+	PersonList *add=malloc(sizeof(PersonList));//malloc memory
 	
-	strcpy(add->szName,szName);
+	strcpy(add->szName,szName); //initing our struct
 	add->next=NULL;
 	add->tail=add;
 	
-	if(*root==NULL){  
-		*root=add;
+	if(*root==NULL){  // if nuul
+		*root=add;// just make it equal root
 		return;
 	}
 	
-	(*root)->tail->next=add;	
-	(*root)->tail=(*root)->tail->next;
+	(*root)->tail->next=add;//init tail next
+	(*root)->tail=(*root)->tail->next;//update tail.
 	
 }
 int g_rootIndex = 1;
@@ -112,22 +112,22 @@ void InsertIndex2(int index, char * name, int index2) {
   
   fseek(pTarget, sizeof(Person) * (g_rootIndex - 1), 0);
   
-  if (g_rootIndex == index) { //roota denk gelirse
-    g_rootIndex = index2; // dosyayı linked listmiş gibi okumaya çalıştığım  için rootu değiştiriyorum birdahki eklemede rootta başlasın
+  if (g_rootIndex == index) { //roota denk gelirse // if it equals root
+    g_rootIndex = index2; // trying to read file as if it is a linked list so i am changing the global root index in order to read correctly
   }
   
   int iReaded = 1;
   
-  while (stRead.index != index) { // aslında direk lak diye hedef indexe gidebilirim ama ödevin olayı dosyada linked list gibi dolasmak olduğu için böyle yaptım.
+  while (stRead.index != index) { // our purpose is reading it like a linked list
 
     iReaded = fread( & stRead, sizeof(Person), 1, pTarget);
     if (iReaded == 0) {
-      //taile eklemeye çalışılıyor. bunu implemente etmedim. sadece olan indexlerin üstüne yazılabilir.
+      //trying to add tail which is not implemented cause it is not this work's purpose here.
       fclose(pTarget);
       return;
     }
 
-    if (stRead.iNext) // son indexi yerinden etmek istiyorsa hareket etme.	
+    if (stRead.iNext) // going next index
       fseek(pTarget, sizeof(Person) * ((stRead.iNext) - 1), 0);
 
   }
@@ -137,13 +137,13 @@ void InsertIndex2(int index, char * name, int index2) {
   stRead.iPrev = Add.index;
   
   
-  fseek(pTarget, -sizeof(Person), SEEK_CUR);  //previ düzeltiyorum.//adjusting prev
+  fseek(pTarget, -sizeof(Person), SEEK_CUR);  //adjusting prev
   
   fwrite( & stRead, sizeof(Person), 1, pTarget);
   
   if (Add.iPrev) {
 
-    fseek(pTarget, ((Add.iPrev) - 1) * sizeof(Person), 0); //previnin nextini düzelteceğim.//adjusting prev's next
+    fseek(pTarget, ((Add.iPrev) - 1) * sizeof(Person), 0); //previnin nextini duzeltece�im.//adjusting prev's next
     
 	fread( & stRead, sizeof(Person), 1, pTarget);
     
@@ -166,8 +166,8 @@ void main() {
   
   InsertIndex2(3, "Taha", 6);
   InsertIndex2(5, "YUNUS", 7);
-  InsertIndex2(1, "messi", 8);
-  InsertIndex2(5, "neymar", 9);
+  InsertIndex2(1, "ali", 8);
+  InsertIndex2(5, "ahmet", 9);
   
   FILE * pTarget = fopen("dev.cdt", "rb");
   
@@ -205,11 +205,11 @@ void main() {
       break;
     }
     
-    printf("%s %d -> ", stRead.szName, stRead.index);
+    printf("%s %d -> ", stRead.szName, stRead.index); //priting on console
     
-    AddToTheTail(&pRoot,stRead.szName);
+    AddToTheTail(&pRoot,stRead.szName);//creating linked list
     
-    fseek(pTarget, sizeof(Person) * ((stRead.iNext) - 1), SEEK_SET);
+    fseek(pTarget, sizeof(Person) * ((stRead.iNext) - 1), SEEK_SET); //going next node
     
   }
   
@@ -217,7 +217,7 @@ void main() {
   
   while(pRoot){
   	
-  	printf("%s \n",pRoot->szName);
+  	printf("%s \n",pRoot->szName);//checking list on ram.
   	
   	pRoot=pRoot->next;
   	
