@@ -1,39 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct myStruct {
+typedef struct TestStruct {
   int val;
-  struct myStruct * next;
-  struct myStruct * tail;
+  struct TestStruct * next;
+  struct TestStruct* tail;
 }
-myStruct; //
+TestStruct; //
 
-myStruct * root; //global root pointer
+TestStruct * g_pRoot; //global root pointer
 void addElement(int val) {// this inserts from the head
-  myStruct * add = malloc(sizeof(myStruct)); // element malloc // allocate memory
+  TestStruct * add = malloc(sizeof(TestStruct)); // element malloc // allocate memory
   add -> val = val; // vali ekledim // initing val struct here
   add -> tail = add;// add to the tail
-  add -> next = root; //bunun nextini root yaptým// seting add's next to root
-  root = add; // bunu da add eþitledim þuan 20 eklediðimizi var sayalým 20->NULL þeklinde üzerine 40 eklediðimizde  40->20->NULL BÝR SONRAKÝ 60 OLSUN 60->40->20->NULL // root= add
+  add -> next = g_pRoot; //bunun nextini root yaptým// seting add's next to root
+  g_pRoot = add; // bunu da add eþitledim þuan 20 eklediðimizi var sayalým 20->NULL þeklinde üzerine 40 eklediðimizde  40->20->NULL BÝR SONRAKÝ 60 OLSUN 60->40->20->NULL // root= add
+  // EN: imagine we added 20 so it's now 20->NULL after that if we add 40  it would be 40->20->NULL
 }
 void AddToTheTail(int val) {// this inserts to the tail
-  myStruct * add = malloc(sizeof(myStruct));
+  TestStruct * add = malloc(sizeof(TestStruct));
   add -> val = val;
   add -> next = NULL;// i inited add 
   add -> tail = add;
-  if (root == NULL) {// first time adding to root
-    root = add;
-    root -> tail = root;
+  if (g_pRoot == NULL) {// first time adding to root
+    g_pRoot = add;
     return;
   }
-  root -> tail->next  = add; // making tail next to add
-  root -> tail =root->tail->next ;// updating tail
+  g_pRoot ->tail->next  = add; // making tail next to add
+  g_pRoot -> tail =g_pRoot->tail->next ;// updating tail
 }
 void DeleteElement(int target) { //1.derecesinide yaz
-  if(root==NULL)
+  if(g_pRoot==NULL)
   	return;
-  myStruct ** pStart = &root; //ptr to ptr kullandým
-  myStruct * temp; //temp NULL:
+  TestStruct ** pStart = &g_pRoot; //ptr to ptr kullandým
+  TestStruct * temp; //temp NULL:
   while (( * pStart) -> val != target) { //DEGER targete eþit olana kadar dolas.
     temp = ( * pStart);
     pStart = & ( * pStart) -> next;
@@ -42,7 +42,7 @@ void DeleteElement(int target) { //1.derecesinide yaz
     }
   }
   if (( * pStart) -> next == NULL) {
-    root -> tail = temp;
+    g_pRoot -> tail = temp;
   }
   temp = * pStart; // temp içinde silincek deðeri tut.// store the target's address inside temp which will be deleted
   * pStart = ( * pStart) -> next; //þimdi asýl kilit nokta bu listeyi biz 2. deðerden aldýk þimdi X -> X kutucuk yani biz ramdeki adresi gösteriyoruz burada(heap) bu yüzden burada yaptýðýmýz iþler kalýcý þimdi burada next diyerek listeden target deðeri kestim.
@@ -61,7 +61,7 @@ void main() {
   DeleteElement(152);
   AddToTheTail(200);
   DeleteElement(1193);
-  myStruct * pStart = root;
+  TestStruct * pStart = g_pRoot;
   while (pStart != NULL) {
     printf(" %d->", pStart -> val);
     pStart = pStart -> next;
