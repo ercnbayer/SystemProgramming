@@ -13,8 +13,8 @@ void addElement(int val) {// this inserts from the head
   TestStruct * add = malloc(sizeof(TestStruct)); // element malloc // allocate memory
   add -> val = val; // vali ekledim // initing val struct here
   add -> tail = add;// add to the tail
-  add -> next = g_pRoot; //bunun nextini root yaptým// seting add's next to root
-  g_pRoot = add; // bunu da add eþitledim þuan 20 eklediðimizi var sayalým 20->NULL þeklinde üzerine 40 eklediðimizde  40->20->NULL BÝR SONRAKÝ 60 OLSUN 60->40->20->NULL // root= add
+  add -> next = g_pRoot; //bunun nextini root yaptï¿½m// seting add's next to root
+  g_pRoot = add; // bunu da add eï¿½itledim ï¿½uan 20 eklediï¿½imizi var sayalï¿½m 20->NULL ï¿½eklinde ï¿½zerine 40 eklediï¿½imizde  40->20->NULL Bï¿½R SONRAKï¿½ 60 OLSUN 60->40->20->NULL // root= add
   // EN: imagine we added 20 so it's now 20->NULL after that if we add 40  it would be 40->20->NULL
 }
 void AddToTheTail(int val) {// this inserts to the tail
@@ -32,9 +32,9 @@ void AddToTheTail(int val) {// this inserts to the tail
 void DeleteElement(int target) { //1.derecesinide yaz
   if(g_pRoot==NULL)
   	return;
-  TestStruct ** pStart = &g_pRoot; //ptr to ptr kullandým
+  TestStruct ** pStart = &g_pRoot; //ptr to ptr kullandï¿½m
   TestStruct * temp; //temp NULL:
-  while (( * pStart) -> val != target) { //DEGER targete eþit olana kadar dolas.
+  while (( * pStart) -> val != target) { //DEGER targete eï¿½it olana kadar dolas.
     temp = ( * pStart);
     pStart = & ( * pStart) -> next;
     if (  *pStart == NULL) { // bos olursa fonksiyonu terket 
@@ -44,10 +44,10 @@ void DeleteElement(int target) { //1.derecesinide yaz
   if (( * pStart) -> next == NULL) {
     g_pRoot -> tail = temp;
   }
-  temp = * pStart; // temp içinde silincek deðeri tut.// store the target's address inside temp which will be deleted
-  * pStart = ( * pStart) -> next; //þimdi asýl kilit nokta bu listeyi biz 2. deðerden aldýk þimdi X -> X kutucuk yani biz ramdeki adresi gösteriyoruz burada(heap) bu yüzden burada yaptýðýmýz iþler kalýcý þimdi burada next diyerek listeden target deðeri kestim.
+  temp = * pStart; // temp iï¿½inde silincek deï¿½eri tut.// store the target's address inside temp which will be deleted
+  * pStart = ( * pStart) -> next; //ï¿½imdi asï¿½l kilit nokta bu listeyi biz 2. deï¿½erden aldï¿½k ï¿½imdi X -> X kutucuk yani biz ramdeki adresi gï¿½steriyoruz burada(heap) bu yï¿½zden burada yaptï¿½ï¿½ï¿½mï¿½z iï¿½ler kalï¿½cï¿½ ï¿½imdi burada next diyerek listeden target deï¿½eri kestim.
   // en: changing our pointer to pointer to its next by doing that we update de list
-  free(temp); // tempte tuttuðum hafýza deðerini free ile  shared memorye býraktým.//realese the memory
+  free(temp); // tempte tuttuï¿½um hafï¿½za deï¿½erini free ile  shared memorye bï¿½raktï¿½m.//realese the memory
 }
 
 void main() {
